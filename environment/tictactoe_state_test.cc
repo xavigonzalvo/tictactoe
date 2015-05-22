@@ -1,6 +1,6 @@
 // Unit test for the Tic-Tac-Toe state handler.
 
-#include "experimental/users/xavigonzalvo/ttt/environment/tictactoe_state.h"
+#include "environment/tictactoe_state.h"
 
 #include "testing/base/public/gunit.h"
 

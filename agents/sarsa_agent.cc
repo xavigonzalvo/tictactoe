@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/agents/sarsa_agent.h"
+#include "agents/sarsa_agent.h"
 
 #include <vector>
 

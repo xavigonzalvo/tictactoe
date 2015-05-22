@@ -2,10 +2,10 @@
 // to define a specific container for actions as the generic representation is
 // enough. Look at actions.h for more information.
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_
+#ifndef TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_
+#define TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_
 
-#include "experimental/users/xavigonzalvo/ttt/environment/actions.h"
+#include "environment/actions.h"
 
 namespace ttt {
 
@@ -17,4 +17,4 @@ void InitTicTacToeActions(Actions *actions, int num_actions) {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_
+#endif  // TTT_ENVIRONMENT_TICTACTOE_ACTIONS_H_

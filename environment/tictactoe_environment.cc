@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/environment/tictactoe_environment.h"
+#include "environment/tictactoe_environment.h"
 
 #include "base/logging.h"
 

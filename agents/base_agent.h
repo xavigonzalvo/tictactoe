@@ -2,17 +2,17 @@
 // your own learning method. You need to implement "Update" and optionally,
 // SetAction and SetNextAction too.
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_BASE_AGENT_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_BASE_AGENT_H_
+#ifndef TTT_AGENTS_BASE_AGENT_H_
+#define TTT_AGENTS_BASE_AGENT_H_
 
 #include <hash_map>
 #include <string>
 #include <vector>
 
-#include "experimental/users/xavigonzalvo/ttt/config.pb.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/actions.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/state.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/state_handler.h"
+#include "config.pb.h"
+#include "environment/actions.h"
+#include "environment/state.h"
+#include "environment/state_handler.h"
 #include "util/random/acmrandom.h"
 #include "util/registration/registerer.h"
 
@@ -80,4 +80,4 @@ DEFINE_REGISTERER_3(BaseAgent, const Config &, const Actions &,
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_BASE_AGENT_H_
+#endif  // TTT_AGENTS_BASE_AGENT_H_

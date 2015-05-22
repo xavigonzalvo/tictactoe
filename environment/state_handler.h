@@ -1,7 +1,7 @@
 // Generic state handler. List of all states that happen in an episode.
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_STATE_HANDLER_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_STATE_HANDLER_H_
+#ifndef TTT_ENVIRONMENT_STATE_HANDLER_H_
+#define TTT_ENVIRONMENT_STATE_HANDLER_H_
 
 #include <vector>
 
@@ -46,4 +46,4 @@ class SpecializedStateHandler : public StateHandler {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_STATE_HANDLER_H_
+#endif  // TTT_ENVIRONMENT_STATE_HANDLER_H_

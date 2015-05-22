@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/agents/random_agent.h"
+#include "agents/random_agent.h"
 
 #include <vector>
 

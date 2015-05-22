@@ -2,13 +2,13 @@
 // a string where main player uses "X" symbols and the opponent uses
 // "O".
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_STATE_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_STATE_H_
+#ifndef TTT_ENVIRONMENT_TICTACTOE_STATE_H_
+#define TTT_ENVIRONMENT_TICTACTOE_STATE_H_
 
 #include <math.h>
 #include <string>
 
-#include "experimental/users/xavigonzalvo/ttt/environment/state.h"
+#include "environment/state.h"
 
 namespace ttt {
 
@@ -51,4 +51,4 @@ class TicTacToeState : public State {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_STATE_H_
+#endif  // TTT_ENVIRONMENT_TICTACTOE_STATE_H_

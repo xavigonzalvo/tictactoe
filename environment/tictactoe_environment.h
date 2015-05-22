@@ -1,11 +1,11 @@
 // Tic-Tac-Toe environment. Starts, runs and controls the game execution.
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_
+#ifndef TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_
+#define TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_
 
-#include "experimental/users/xavigonzalvo/ttt/agents/base_agent.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/environment.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/tictactoe_state.h"
+#include "agents/base_agent.h"
+#include "environment/environment.h"
+#include "environment/tictactoe_state.h"
 
 namespace ttt {
 
@@ -37,4 +37,4 @@ class TicTacToeEnvironment : public Environment {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_
+#endif  // TTT_ENVIRONMENT_TICTACTOE_ENVIRONMENT_H_

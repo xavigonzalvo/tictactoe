@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/environment/actions.h"
+#include "environment/actions.h"
 
 namespace ttt {
 

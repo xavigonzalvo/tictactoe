@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/environment/tictactoe_state.h"
+#include "environment/tictactoe_state.h"
 
 #include "base/logging.h"
 #include "strings/stringpiece.h"

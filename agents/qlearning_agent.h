@@ -1,12 +1,12 @@
 // Agent using off-policy learning (ie. Q-learning).
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_QLEARNING_AGENT_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_QLEARNING_AGENT_H_
+#ifndef TTT_AGENTS_QLEARNING_AGENT_H_
+#define TTT_AGENTS_QLEARNING_AGENT_H_
 
-#include "experimental/users/xavigonzalvo/ttt/agents/base_agent.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/actions.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/state.h"
-#include "experimental/users/xavigonzalvo/ttt/environment/state_handler.h"
+#include "agents/base_agent.h"
+#include "environment/actions.h"
+#include "environment/state.h"
+#include "environment/state_handler.h"
 
 namespace ttt {
 
@@ -23,4 +23,4 @@ class QLearningAgent : public BaseAgent {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_AGENTS_QLEARNING_AGENT_H_
+#endif  // TTT_AGENTS_QLEARNING_AGENT_H_

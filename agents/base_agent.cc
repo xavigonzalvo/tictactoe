@@ -1,11 +1,11 @@
-#include "experimental/users/xavigonzalvo/ttt/agents/base_agent.h"
+#include "agents/base_agent.h"
 
 #include <algorithm>
 
 #include "file/base/file.h"
 #include "file/base/helpers.h"
 #include "util/gtl/map_util.h"
-#include "experimental/users/xavigonzalvo/ttt/agents/agent_model.pb.h"
+#include "agents/agent_model.pb.h"
 
 namespace ttt {
 

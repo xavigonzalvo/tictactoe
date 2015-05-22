@@ -6,12 +6,12 @@
 //    for (int i = 0; i < ACTIONS; ++i)
 //      actions.Add();
 
-#ifndef EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_ACTIONS_H_
-#define EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_ACTIONS_H_
+#ifndef TTT_ENVIRONMENT_ACTIONS_H_
+#define TTT_ENVIRONMENT_ACTIONS_H_
 
 #include <vector>
 
-#include "experimental/users/xavigonzalvo/ttt/environment/state.h"
+#include "environment/state.h"
 #include "util/random/acmrandom.h"
 
 namespace ttt {
@@ -41,4 +41,4 @@ class Actions {
 
 }  // namespace ttt
 
-#endif  // EXPERIMENTAL_USERS_XAVIGONZALVO_TTT_ENVIRONMENT_ACTIONS_H_
+#endif  // TTT_ENVIRONMENT_ACTIONS_H_

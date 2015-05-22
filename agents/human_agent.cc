@@ -1,4 +1,4 @@
-#include "experimental/users/xavigonzalvo/ttt/agents/human_agent.h"
+#include "agents/human_agent.h"
 
 #include <iostream>
 #include <vector>

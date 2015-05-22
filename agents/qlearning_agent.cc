@@ -2,29 +2,29 @@
 
 #include <vector>
 
-#include "util/gtl/map_util.h"
-
 namespace ttt {
 
 bool QLearningAgent::Update(float reward, bool last_state) {
   const State *state = state_handler_.Get(state_id_);
-  vector<float> &q = LookupOrInsert(&state_action_, state->ToString(),
-                                    vector<float>(actions_.size(), 0.0));
+  if (state_action_.find(state->ToString()) == state_action_.end()) {
+    state_action_[state->ToString()] = std::vector<float>(actions_.size(), 0.0);
+  }
+  std::vector<float> &q = state_action_[state->ToString()];
   if (last_state) {
     q[action_] += config_.alpha() * (reward - q[action_]);
   } else {
     // Take the best possible next action.
     float next_q = 0.0;
     const State *next_state = state_handler_.Get(next_state_id_);
-    const string next_state_key = next_state->ToString();
-    if (!ContainsKey(state_action_, next_state_key)) {
-      LookupOrInsert(&state_action_, next_state_key,
-                     vector<float>(actions_.size(), 0.0));
+    const std::string next_state_key = next_state->ToString();
+    if (state_action_.find(next_state_key) == state_action_.end()) {
+      state_action_[next_state_key] =
+          std::vector<float>(actions_.size(), 0.0);
       next_action_ = actions_.Random(next_state);
     } else {
-      const vector<float> &action_scores =
-          FindOrDie(state_action_, next_state_key);
-      const vector<int> actions = Sort(action_scores);
+      const std::vector<float> &action_scores =
+          state_action_[next_state_key];
+      const std::vector<int> actions = Sort(action_scores);
       for (int i = 0; i < actions.size(); ++i) {
         if (next_state->Valid(actions[i])) {
           next_q = action_scores[actions[i]];

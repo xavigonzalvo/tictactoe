@@ -11,14 +11,14 @@
 
 #include <vector>
 
-#include "random.h"
+#include "core/simple_random.h"
 #include "environment/state.h"
 
 namespace ttt {
 
 class Actions {
  public:
-  Actions() : size_(0), random_(ACMRandom::HostnamePidTimeSeed()) {}
+  Actions() : size_(0), random_() {}
   ~Actions() {}
 
   // Returns the number of actions.
@@ -36,7 +36,7 @@ class Actions {
 
   // Random number generator for the random action selection in
   // exploratory mode.
-  mutable ACMRandom random_;
+  mutable SimpleRandom random_;
 };
 
 }  // namespace ttt

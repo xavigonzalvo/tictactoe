@@ -26,21 +26,21 @@ class SpecializedStateHandler : public StateHandler {
   SpecializedStateHandler() {}
   ~SpecializedStateHandler() {}
 
-  const State *Get(int i) const override {
+  const State *Get(int i) const {
     if (i >= states_.size()) {
-      cerr << "Index out of bounds, id: " << i << " size: "
+      std::cerr << "Index out of bounds, id: " << i << " size: "
            << states_.size();
     }
     return static_cast<const State *>(&states_[i]);
   }
-  void Add(const State *state) override {
-    const StateType *state_type = down_cast<const StateType *>(state);
+  void Add(const State *state) {
+    const StateType *state_type = dynamic_cast<const StateType *>(state);
     states_.push_back(*state_type);
   }
-  void Clear() override { states_.clear(); }
+  void Clear() { states_.clear(); }
 
  private:
-  vector<StateType> states_;
+  std::vector<StateType> states_;
 };
 
 }  // namespace ttt

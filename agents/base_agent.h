@@ -5,15 +5,15 @@
 #ifndef TTT_AGENTS_BASE_AGENT_H_
 #define TTT_AGENTS_BASE_AGENT_H_
 
-#include <hash_map>
+#include <map>
 #include <string>
 #include <vector>
 
 #include "config.pb.h"
+#include "core/simple_random.h"
 #include "environment/actions.h"
 #include "environment/state.h"
 #include "environment/state_handler.h"
-#include "random.h"
 
 namespace ttt {
 
@@ -32,10 +32,10 @@ class BaseAgent {
   int action() const { return action_; }
 
   // Saves the agent memory to file.
-  bool Save(const string &filename) const;
+  bool Save(const std::string &filename) const;
 
   // Loads the agent memory from file.
-  bool Load(const string &filename);
+  bool Load(const std::string &filename);
 
   // Returns true if it's a human agent.
   virtual bool human() const { return false; }
@@ -51,7 +51,7 @@ class BaseAgent {
   int SelectAction(const State *state);
 
   // Sorts a vector by value in decreasing order and returns the indices.
-  vector<int> Sort(const vector<float> &v) const;
+  std::vector<int> Sort(const std::vector<float> &v) const;
 
   const Config &config_;
   const Actions &actions_;
@@ -59,7 +59,8 @@ class BaseAgent {
 
   // State-action pair matrix. This is the $Q$ matrix in a Q-learning
   // algorithm.
-  hash_map<string, vector<float> > state_action_;
+  typedef std::map<std::string, std::vector<float> > StateActionMap;
+  StateActionMap state_action_;
 
   // Current and next state.
   int state_id_;
@@ -70,7 +71,7 @@ class BaseAgent {
   int next_action_;
 
  private:
-  Random random_;
+  SimpleRandom random_;
 };
 
 }  // namespace ttt

@@ -37,7 +37,7 @@ TEST_F(TictactoeStateTest, DoActions) {
   ASSERT_FALSE(state_.Do(10, false, &reward));
 
   // Expected success.
-  const vector<string> kTables = {
+  const std::vector<std::string> kTables = {
     "X........",
     ".X.......",
     "..X......",

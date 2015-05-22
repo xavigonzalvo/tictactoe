@@ -1,5 +1,5 @@
 // State handler for the Tic-Tac-Toe game. The world is represented as
-// a string where main player uses "X" symbols and the opponent uses
+// a std::string where main player uses "X" symbols and the opponent uses
 // "O".
 
 #ifndef TTT_ENVIRONMENT_TICTACTOE_STATE_H_
@@ -21,19 +21,19 @@ class TicTacToeState : public State {
   explicit TicTacToeState(int dimension)
       : State(dimension), num_rows_(sqrt(dimension_)) {}
 
-  bool Init() override;
+  bool Init();
 
-  bool Valid(int action) const override;
+  bool Valid(int action) const;
 
   // Does an action in the tic-tac-toe table. It sets an "X" for the
   // main player and a "O" for the opponent.
-  bool Do(int action, bool opponent, float *reward) override;
+  bool Do(int action, bool opponent, float *reward);
 
-  // Returns a string representation of the state to use in a q-table.
-  string ToString() const override { return table_; }
+  // Returns a std::string representation of the state to use in a q-table.
+  std::string ToString() const { return table_; }
 
   // Returns a readable Tic-Tac-Toe table.
-  string DebugString() const override;
+  std::string DebugString() const;
 
  protected:
   // Returns true if somebody has won the game.
@@ -42,11 +42,11 @@ class TicTacToeState : public State {
  private:
   // The data for the tictactoe table. Each char represents a position of the
   // table. Main player uses "X" and opponent "O".
-  string table_;
+  std::string table_;
   static const char kEmptyPosition = '.';
 
   // Number of rows of the table.
-  const int num_rows_;
+  int num_rows_;
 };
 
 }  // namespace ttt

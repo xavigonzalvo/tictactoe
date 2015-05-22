@@ -1,8 +1,7 @@
 #include "environment/tictactoe_state.h"
 
-#include "base/logging.h"
-#include "strings/stringpiece.h"
-#include "strings/strcat.h"
+#include <iostream>
+#include <stdio.h>
 
 namespace ttt {
 
@@ -12,14 +11,15 @@ namespace {
 class SimpleMatrix {
  public:
   // Creates a simple square matrix.
-  SimpleMatrix(const string &data, int size) : data_(data), size_(size) {}
+  SimpleMatrix(const std::string &data, int size)
+      : data_(data.c_str()), size_(size) {}
 
   char at(int row, int col) const {
     return data_[row * size_ + col];
   }
 
  private:
-  StringPiece data_;
+  const char *data_;
   const int size_;
 };
 
@@ -43,7 +43,7 @@ bool TicTacToeState::Valid(int action) const {
 
 bool TicTacToeState::Do(int action, bool opponent, float *reward) {
   if (!Valid(action)) {
-    LOG(ERROR) << "Invalid action";
+    std::cerr << "Invalid action";
     return false;
   }
   num_actions_++;
@@ -83,7 +83,7 @@ bool TicTacToeState::SomebodyWon() const {
       success &= (matrix.at(row, col) == matrix.at(row, 0));
     }
     if (success) {
-      VLOG(1) << "Horizontal";
+      std::cout << "Horizontal";
       return true;
     }
   }
@@ -98,7 +98,7 @@ bool TicTacToeState::SomebodyWon() const {
       success &= (matrix.at(row, col) == matrix.at(0, col));
     }
     if (success) {
-      VLOG(1) << "Vertical";
+      std::cout << "Vertical";
       return true;
     }
   }
@@ -112,7 +112,7 @@ bool TicTacToeState::SomebodyWon() const {
     success &= (matrix.at(i, i) == matrix.at(0, 0));
   }
   if (success) {
-    VLOG(1) << "Left diagonal";
+    std::cout << "Left diagonal";
     return true;
   }
   // Right diagonal.
@@ -125,21 +125,24 @@ bool TicTacToeState::SomebodyWon() const {
     success &= (matrix.at(num_rows_ - 1 - i, i) == matrix.at(0, num_rows_ - 1));
   }
   if (success) {
-    VLOG(1) << "Right diagonal";
+    std::cout << "Right diagonal";
     return true;
   }
   return false;
 }
 
-string TicTacToeState::DebugString() const {
-  string ret = StrCat("final_state: ", finished_ ? "true" : "false",
-                      " num_actions: ", num_actions_, "\n");
+std::string TicTacToeState::DebugString() const {
+  char buffer[33];
+  snprintf(buffer, sizeof(buffer), "%d", num_actions_);
+  std::string ret = std::string("final_state: ") +
+      (finished_ ? "true" : "false") +
+      " num_actions: " + std::string(buffer) + "\n";
   SimpleMatrix matrix(table_, num_rows_);
   for (int i = 0; i < num_rows_; ++i) {
     for (int j = 0; j < num_rows_; ++j) {
-      StrAppend(&ret, " " , string(1, matrix.at(i, j)));
+      ret += " " + std::string(1, matrix.at(i, j));
     }
-    StrAppend(&ret, "\n");
+    ret += "\n";
   }
   return ret;
 }

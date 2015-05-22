@@ -44,12 +44,12 @@ struct SimpleStats {
   }
 
   void Finalize() const {
-    cout << "Percetange of won games: "
-         << static_cast<float>(num_wins) / FLAGS_epochs << endl;;
-    cout << "Percetange of draw games: "
-         << static_cast<float>(num_draw) / FLAGS_epochs << endl;;
-    cout << "Percetange of lost games: "
-         << static_cast<float>(num_lost) / FLAGS_epochs << endl;;
+    std::cout << "Percetange of won games: "
+         << static_cast<float>(num_wins) / FLAGS_epochs << std::endl;;
+    std::cout << "Percetange of draw games: "
+         << static_cast<float>(num_draw) / FLAGS_epochs << std::endl;;
+    std::cout << "Percetange of lost games: "
+         << static_cast<float>(num_lost) / FLAGS_epochs << std::endl;;
   }
 
   int num_lost;
@@ -59,9 +59,9 @@ struct SimpleStats {
 
 bool Run() {
   Config config;
-  fstream input(FLAGS_config_path.c_str(), ios::in | ios::binary);
+  std::fstream input(FLAGS_config_path.c_str(), std::ios::in);
   if (!config.ParseFromIstream(&input)) {
-    cerr << "Failed to parse config" << endl;
+    std::cerr << "Failed to parse config" << std::endl;
     return false;
   }
 
@@ -73,15 +73,15 @@ bool Run() {
   SpecializedStateHandler<TicTacToeState> state_handler;
 
   // Create agents.
-  std::unique_ptr<BaseAgent> learner_agent(
-      AgentFactory(config.agents().learner(), config, actions, state_handler));
+  BaseAgent *learner_agent =
+      AgentFactory(config.agents().learner(), config, actions, state_handler);
   if (!FLAGS_load_learner_agent_model_path.empty()) {
     if (!learner_agent->Load(FLAGS_load_learner_agent_model_path)) {
       return false;
     }
   }
-  std::unique_ptr<BaseAgent> opponent_agent(
-      AgentFactory(config.agents().opponent(), config, actions, state_handler));
+  BaseAgent *opponent_agent =
+      AgentFactory(config.agents().opponent(), config, actions, state_handler);
   if (!FLAGS_load_opponent_agent_model_path.empty()) {
     if (!opponent_agent->Load(FLAGS_load_opponent_agent_model_path)) {
       return false;
@@ -89,21 +89,21 @@ bool Run() {
   }
 
   // Initialize environment.
-  TicTacToeEnvironment environment(opponent_agent.get(), &state_handler);
+  TicTacToeEnvironment environment(opponent_agent, &state_handler);
 
   // For each epoch, run an episode until it's finished.
   SimpleStats stats;
   for (int epoch = 0; epoch < FLAGS_epochs; ++epoch) {
     if (!environment.Start()) {
-      cerr << "Failed to start environment";
+      std::cerr << "Failed to start environment";
       return false;
     }
     // TODO(xavigonzalvo): randomize the first player?
     learner_agent->SetAction(environment.state());
-    cout << "Epoch " << epoch;
+    std::cout << "Epoch " << epoch;
     while (!environment.end_of_episode()) {
       if (!environment.Run(learner_agent->action())) {
-        cerr << "Failed to run environment on epoch " << epoch;
+        std::cerr << "Failed to run environment on epoch " << epoch;
         return false;
       }
       if (!environment.end_of_episode()) {
@@ -111,14 +111,14 @@ bool Run() {
       }
       if (!learner_agent->Update(environment.reward(),
                                  environment.end_of_episode())) {
-        cerr << "Failed to update learner";
+        std::cerr << "Failed to update learner";
         return false;
       }
-      cout << "  Reward = " << environment.reward();
+      std::cout << "  Reward = " << environment.reward();
     }
     if (opponent_agent->human()) {
-      cout << "Final table: " << environment.state()->DebugString()
-           << endl << "--------------" << endl;
+      std::cout << "Final table: " << environment.state()->DebugString()
+                << std::endl << "--------------" << std::endl;
     }
     stats.Update(environment.reward());
   }
@@ -128,9 +128,10 @@ bool Run() {
 
   // Save learned model.
   if (!FLAGS_save_agent_model_path.empty()) {
-    cout << "Number of states: " << learner_agent->NumStates() << endl;
+    std::cout << "Number of states: " << learner_agent->NumStates()
+              << std::endl;
     if (!learner_agent->Save(FLAGS_save_agent_model_path)) {
-      cerr << "Failed to save learner data";
+      std::cerr << "Failed to save learner data";
       return false;
     }
   }
@@ -141,6 +142,5 @@ bool Run() {
 }  // namespace ttt
 
 int main(int argc, char **argv) {
-  InitGoogle(argv[0], &argc, &argv, true);
-  ttt::Run() ? return 0 : return 1;
+  return ttt::Run() ? 0 : 1;
 }

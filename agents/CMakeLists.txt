@@ -10,3 +10,4 @@ add_library(agents STATIC agent_factory.cc base_agent.cc human_agent.cc
   ${PROTO_SRCS} ${PROTO_HDRS})
 
 target_link_libraries(agents config)
+target_link_libraries(agents core)

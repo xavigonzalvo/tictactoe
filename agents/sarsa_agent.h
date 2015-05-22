@@ -16,9 +16,9 @@ class SarsaAgent : public BaseAgent {
   SarsaAgent(const Config &config, const Actions &actions,
              const StateHandler &state_handler)
       : BaseAgent(config, actions, state_handler) {}
-  ~SarsaAgent() override {}
+  ~SarsaAgent() {}
 
-  bool Update(float reward, bool last_state) override;
+  bool Update(float reward, bool last_state);
 };
 
 }  // namespace ttt

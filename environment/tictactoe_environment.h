@@ -18,9 +18,9 @@ class TicTacToeEnvironment : public Environment {
         state_(kTableDimension) {}
   ~TicTacToeEnvironment() {}
 
-  bool Start() override;
+  bool Start();
 
-  bool Run(int action) override;
+  bool Run(int action);
 
   const State *state() const { return &state_; }
 

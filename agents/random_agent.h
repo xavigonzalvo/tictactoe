@@ -14,11 +14,11 @@ class RandomAgent : public BaseAgent {
   RandomAgent(const Config &config, const Actions &actions,
               const StateHandler &state_handler)
       : BaseAgent(config, actions, state_handler) {}
-  ~RandomAgent() override {}
+  ~RandomAgent() {}
 
-  void SetAction(const State *state) override;
-  void SetNextAction(const State *state) override;
-  bool Update(float reward, bool last_state) override;
+  void SetAction(const State *state);
+  void SetNextAction(const State *state);
+  bool Update(float reward, bool last_state);
 };
 
 }  // namespace ttt

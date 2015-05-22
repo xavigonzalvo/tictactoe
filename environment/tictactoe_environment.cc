@@ -1,7 +1,5 @@
 #include "environment/tictactoe_environment.h"
 
-#include "base/logging.h"
-
 namespace ttt {
 
 bool TicTacToeEnvironment::Start() {
@@ -17,8 +15,8 @@ bool TicTacToeEnvironment::Start() {
 bool TicTacToeEnvironment::Run(int action) {
   // Main player's move.
   if (!state_.Do(action, false /* learner agent */, &reward_)) {
-    LOG(ERROR) << "Failed to execute action of main player: " << action
-               << " table: " << state_.DebugString();
+    std::cerr << "Failed to execute action of main player: " << action
+              << " table: " << state_.DebugString();
     return false;
   }
   state_.NextId();
@@ -30,8 +28,8 @@ bool TicTacToeEnvironment::Run(int action) {
   // Opponent's move.
   opponent_->SetAction(&state_);
   if (!state_.Do(opponent_->action(), true /* opponent agent */, &reward_)) {
-    LOG(ERROR) << "Failed to execute action of opponent: "
-               << opponent_->action() << " table: " << state_.DebugString();
+    std::cerr << "Failed to execute action of opponent: "
+              << opponent_->action() << " table: " << state_.DebugString();
     return false;
   }
   state_.NextId();

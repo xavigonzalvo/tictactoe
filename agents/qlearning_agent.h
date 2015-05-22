@@ -15,10 +15,10 @@ class QLearningAgent : public BaseAgent {
   QLearningAgent(const Config &config, const Actions &actions,
                  const StateHandler &state_handler)
       : BaseAgent(config, actions, state_handler) {}
-  ~QLearningAgent() override {}
+  ~QLearningAgent() {}
 
-  bool Update(float reward, bool last_state) override;
-  void SetNextAction(const State *state) override;
+  bool Update(float reward, bool last_state);
+  void SetNextAction(const State *state);
 };
 
 }  // namespace ttt

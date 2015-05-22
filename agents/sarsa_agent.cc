@@ -2,21 +2,23 @@
 
 #include <vector>
 
-#include "util/gtl/map_util.h"
-
 namespace ttt {
 
 bool SarsaAgent::Update(float reward, bool last_state) {
   const State *state = state_handler_.Get(state_id_);
-  vector<float> &q = LookupOrInsert(&state_action_, state->ToString(),
-                                    vector<float>(actions_.size(), 0.0));
+  if (state_action_.find(state->ToString()) == state_action_.end()) {
+    state_action_[state->ToString()] = std::vector<float>(actions_.size(), 0.0);
+  }
+  std::vector<float> &q = state_action_[state->ToString()];
   if (last_state) {
     q[action_] += config_.alpha() * (reward - q[action_]);
   } else {
     const State *next_state = state_handler_.Get(next_state_id_);
-    const vector<float> &next_q =
-        LookupOrInsert(&state_action_, next_state->ToString(),
-                       vector<float>(actions_.size(), 0.0));
+    if (state_action_.find(next_state->ToString()) == state_action_.end()) {
+      state_action_[next_state->ToString()] =
+          std::vector<float>(actions_.size(), 0.0);
+    }
+    const std::vector<float> &next_q = state_action_[next_state->ToString()];
     q[action_] += config_.alpha() * (reward + config_.gamma() *
                                      next_q[next_action_] - q[action_]);
   }

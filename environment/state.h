@@ -33,10 +33,10 @@ class State {
   virtual bool Do(int action, bool opponent, float *reward) = 0;
 
   // To be used as a key.
-  virtual string ToString() const = 0;
+  virtual std::string ToString() const = 0;
 
   // For visualization purposes.
-  virtual string DebugString() const = 0;
+  virtual std::string DebugString() const = 0;
 
   // Returns true if it's the final state.
   virtual bool finished() const { return finished_; }

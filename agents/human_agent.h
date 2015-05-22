@@ -16,13 +16,13 @@ class HumanAgent : public BaseAgent {
   HumanAgent(const Config &config, const Actions &actions,
              const StateHandler &state_handler)
       : BaseAgent(config, actions, state_handler) {}
-  ~HumanAgent() override {}
+  ~HumanAgent() {}
 
-  void SetAction(const State *state) override;
-  void SetNextAction(const State *state) override;
-  bool Update(float reward, bool last_state) override;
+  void SetAction(const State *state);
+  void SetNextAction(const State *state);
+  bool Update(float reward, bool last_state);
 
-  bool human() const override { return true; }
+  bool human() const { return true; }
 };
 
 }  // namespace ttt

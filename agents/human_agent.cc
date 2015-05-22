@@ -14,21 +14,21 @@ bool HumanAgent::Update(float reward, bool last_state) {
 
 void HumanAgent::SetAction(const State *state) {
   state_id_ = state->id();
-  cout << state->DebugString() << "\nAction? [0-8] ";
-  cin >> action_;
+  std::cout << state->DebugString() << "\nAction? [0-8] ";
+  std::cin >> action_;
   while (!state->Valid(action_)) {
-    cout << "\nSpecify a valid action [0-8]: ";
-    cin >> action_;
+    std::cout << "\nSpecify a valid action [0-8]: ";
+    std::cin >> action_;
   }
 }
 
 void HumanAgent::SetNextAction(const State *state) {
   next_state_id_ = state->id();
-  cout << state->DebugString() << "\nAction [0-8]: ";
-  cin >> next_action_;
+  std::cout << state->DebugString() << "\nAction [0-8]: ";
+  std::cin >> next_action_;
   while (!state->Valid(next_action_)) {
-    cout << "\nSpecify a valid action [0-8]: ";
-    cin >> next_action_;
+    std::cout << "\nSpecify a valid action [0-8]: ";
+    std::cin >> next_action_;
   }
 }
 

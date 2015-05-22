@@ -48,29 +48,22 @@ Learning
 
 Simply compile the main tool:
 
-blaze build -c opt experimental/users/xavigonzalvo/ttt:learner
+  mkdir build
+  cd build
+  cmake ..
+  make
 
 and use it like this:
 
-./blaze-bin/experimental/users/xavigonzalvo/ttt/learner --config_path experimental/users/xavigonzalvo/ttt/config/sarsa_vs_sarsa.pb --epochs 1000000
-
-Alternatively you can just build a predefined training:
-
-blaze build -c opt experimental/users/xavigonzalvo/ttt:train_random_vs_sarsa
-less blaze-genfiles/experimental/users/xavigonzalvo/ttt/models/random_vs_sarsa.result
-
-You can see possible trainable configurations by doing this:
-
-blaze query experimental/users/xavigonzalvo/ttt/... | grep train_
+  ./learner --config_path ../config/sarsa_vs_sarsa.pb --epochs 1000000
 
 Human agent
 -----------
 
 You can interact directly with the system specifying a human agent:
 
-blaze build -c opt experimental/users/xavigonzalvo/ttt:learner
-blaze-bin/experimental/users/xavigonzalvo/ttt/learner --config_path experimental/users/xavigonzalvo/ttt/config/human_vs_sarsa.pb \
-  --epochs 10 --load_learner_agent_model_path experimental/users/xavigonzalvo/ttt/models/random_vs_sarsa_epochs2000000.model
+  ./learner --config_path ../config/human_vs_sarsa.pb \
+  --epochs 10 --load_learner_agent_model_path ../models/random_vs_sarsa_epochs2000000.model
 
 
 TODO

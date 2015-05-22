@@ -25,6 +25,4 @@ bool SarsaAgent::Update(float reward, bool last_state) {
   return true;
 }
 
-REGISTER_AGENT(SarsaAgent);
-
 }  // namespace ttt

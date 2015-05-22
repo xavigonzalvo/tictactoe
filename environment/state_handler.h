@@ -3,9 +3,8 @@
 #ifndef TTT_ENVIRONMENT_STATE_HANDLER_H_
 #define TTT_ENVIRONMENT_STATE_HANDLER_H_
 
+#include <iostream>
 #include <vector>
-
-#include "base/logging.h"
 
 namespace ttt {
 
@@ -29,8 +28,8 @@ class SpecializedStateHandler : public StateHandler {
 
   const State *Get(int i) const override {
     if (i >= states_.size()) {
-      LOG(FATAL) << "Index out of bounds, id: " << i << " size: "
-                 << states_.size();
+      cerr << "Index out of bounds, id: " << i << " size: "
+           << states_.size();
     }
     return static_cast<const State *>(&states_[i]);
   }

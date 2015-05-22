@@ -13,8 +13,7 @@
 #include "environment/actions.h"
 #include "environment/state.h"
 #include "environment/state_handler.h"
-#include "util/random/acmrandom.h"
-#include "util/registration/registerer.h"
+#include "random.h"
 
 namespace ttt {
 
@@ -71,12 +70,8 @@ class BaseAgent {
   int next_action_;
 
  private:
-  ACMRandom random_;
+  Random random_;
 };
-
-DEFINE_REGISTERER_3(BaseAgent, const Config &, const Actions &,
-                    const StateHandler &);
-#define REGISTER_AGENT(name) REGISTER_ENTITY(name, BaseAgent);
 
 }  // namespace ttt
 

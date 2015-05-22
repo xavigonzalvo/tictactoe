@@ -1,19 +1,17 @@
 // Main tool to train an agent to play tic-tac-toe using reinforcement
 // learning. Use config.proto to set the options.
 
+#include <fstream>
 #include <memory>
 #include <string>
 
-#include "base/commandlineflags.h"
-#include "base/init_google.h"
-#include "base/logging.h"
+#include <gflags/gflags.h>
+#include "agents/agent_factory.h"
 #include "agents/base_agent.h"
 #include "environment/state_handler.h"
 #include "environment/tictactoe_actions.h"
 #include "environment/tictactoe_environment.h"
 #include "config.pb.h"
-#include "file/base/file.h"
-#include "file/base/helpers.h"
 
 DEFINE_string(config_path, "",
               "Path to the text config proto");
@@ -59,9 +57,13 @@ struct SimpleStats {
   int num_wins;
 };
 
-void Run() {
+bool Run() {
   Config config;
-  QCHECK_OK(file::GetTextProto(FLAGS_config_path, &config, file::Defaults()));
+  fstream input(FLAGS_config_path.c_str(), ios::in | ios::binary);
+  if (!config.ParseFromIstream(&input)) {
+    cerr << "Failed to parse config" << endl;
+    return false;
+  }
 
   // Initialize actions.
   Actions actions;
@@ -71,19 +73,19 @@ void Run() {
   SpecializedStateHandler<TicTacToeState> state_handler;
 
   // Create agents.
-  CHECK(BaseAgentRegisterer::IsValid(config.agents().learner()));
-  CHECK(BaseAgentRegisterer::IsValid(config.agents().opponent()));
   std::unique_ptr<BaseAgent> learner_agent(
-      BaseAgentRegisterer::CreateByName(
-          config.agents().learner(), config, actions, state_handler));
+      AgentFactory(config.agents().learner(), config, actions, state_handler));
   if (!FLAGS_load_learner_agent_model_path.empty()) {
-    QCHECK(learner_agent->Load(FLAGS_load_learner_agent_model_path));
+    if (!learner_agent->Load(FLAGS_load_learner_agent_model_path)) {
+      return false;
+    }
   }
   std::unique_ptr<BaseAgent> opponent_agent(
-      BaseAgentRegisterer::CreateByName(
-          config.agents().opponent(), config, actions, state_handler));
+      AgentFactory(config.agents().opponent(), config, actions, state_handler));
   if (!FLAGS_load_opponent_agent_model_path.empty()) {
-    QCHECK(opponent_agent->Load(FLAGS_load_opponent_agent_model_path));
+    if (!opponent_agent->Load(FLAGS_load_opponent_agent_model_path)) {
+      return false;
+    }
   }
 
   // Initialize environment.
@@ -92,19 +94,27 @@ void Run() {
   // For each epoch, run an episode until it's finished.
   SimpleStats stats;
   for (int epoch = 0; epoch < FLAGS_epochs; ++epoch) {
-    QCHECK(environment.Start());
+    if (!environment.Start()) {
+      cerr << "Failed to start environment";
+      return false;
+    }
     // TODO(xavigonzalvo): randomize the first player?
     learner_agent->SetAction(environment.state());
-    VLOG(1) << "Epoch " << epoch;
+    cout << "Epoch " << epoch;
     while (!environment.end_of_episode()) {
-      CHECK(environment.Run(learner_agent->action()))
-          << "Failed to run environment on epoch " << epoch;
+      if (!environment.Run(learner_agent->action())) {
+        cerr << "Failed to run environment on epoch " << epoch;
+        return false;
+      }
       if (!environment.end_of_episode()) {
         learner_agent->SetNextAction(environment.state());
       }
-      CHECK(learner_agent->Update(environment.reward(),
-                                  environment.end_of_episode()));
-      VLOG(1) << "  Reward = " << environment.reward();
+      if (!learner_agent->Update(environment.reward(),
+                                 environment.end_of_episode())) {
+        cerr << "Failed to update learner";
+        return false;
+      }
+      cout << "  Reward = " << environment.reward();
     }
     if (opponent_agent->human()) {
       cout << "Final table: " << environment.state()->DebugString()
@@ -119,8 +129,12 @@ void Run() {
   // Save learned model.
   if (!FLAGS_save_agent_model_path.empty()) {
     cout << "Number of states: " << learner_agent->NumStates() << endl;
-    QCHECK(learner_agent->Save(FLAGS_save_agent_model_path));
+    if (!learner_agent->Save(FLAGS_save_agent_model_path)) {
+      cerr << "Failed to save learner data";
+      return false;
+    }
   }
+  return true;
 }
 
 }  // namespace
@@ -128,6 +142,5 @@ void Run() {
 
 int main(int argc, char **argv) {
   InitGoogle(argv[0], &argc, &argv, true);
-  ttt::Run();
-  return 0;
+  ttt::Run() ? return 0 : return 1;
 }

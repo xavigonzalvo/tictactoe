@@ -4,9 +4,6 @@
 
 syntax = "proto2";
 
-option cc_api_version = 2;
-option py_api_version = 2;
-
 package ttt;
 
 message Config {

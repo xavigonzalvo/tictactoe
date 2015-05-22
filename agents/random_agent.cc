@@ -21,6 +21,4 @@ void RandomAgent::SetNextAction(const State *state) {
   next_action_ = actions_.Random(state);
 }
 
-REGISTER_AGENT(RandomAgent);
-
 }  // namespace ttt

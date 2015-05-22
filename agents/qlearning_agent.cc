@@ -47,6 +47,4 @@ void QLearningAgent::SetNextAction(const State *state) {
   // agent and the action is selected independently.
 }
 
-REGISTER_AGENT(QLearningAgent);
-
 }  // namespace ttt

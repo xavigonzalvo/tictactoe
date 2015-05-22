@@ -32,6 +32,4 @@ void HumanAgent::SetNextAction(const State *state) {
   }
 }
 
-REGISTER_AGENT(HumanAgent);
-
 }  // namespace ttt

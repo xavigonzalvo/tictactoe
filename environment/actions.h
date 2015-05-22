@@ -11,8 +11,8 @@
 
 #include <vector>
 
+#include "random.h"
 #include "environment/state.h"
-#include "util/random/acmrandom.h"
 
 namespace ttt {
 

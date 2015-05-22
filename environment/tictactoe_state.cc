@@ -25,12 +25,13 @@ class SimpleMatrix {
 
 }  // namespace
 
-bool TicTacToeState::Init() {
+bool TicTacToeState::Init(bool verbose) {
   if (!State::Init()) {
     return false;
   }
   table_.clear();
   table_.resize(dimension_, kEmptyPosition);
+  verbose_ = verbose;
   return true;
 }
 
@@ -48,7 +49,7 @@ bool TicTacToeState::Do(int action, bool opponent, float *reward) {
   }
   num_actions_++;
   table_[action] = opponent ? 'O' : 'X';
-  if (SomebodyWon()) {
+  if (SomebodyWon(verbose_)) {
     finished_ = true;
     if (!opponent) {
       *reward = kSuccessReward;
@@ -64,7 +65,7 @@ bool TicTacToeState::Do(int action, bool opponent, float *reward) {
 
 // Although it is somehow generic it only checks for the diagonals of
 // a 3x3 table.
-bool TicTacToeState::SomebodyWon() const {
+bool TicTacToeState::SomebodyWon(bool verbose) const {
   if (num_actions_ < (2 * num_rows_ - 1)) {
     // We need at least 5 actions in a 3x3 table to be in a potential final
     // state where the two players have played enough number of times.
@@ -83,7 +84,7 @@ bool TicTacToeState::SomebodyWon() const {
       success &= (matrix.at(row, col) == matrix.at(row, 0));
     }
     if (success) {
-      std::cout << "Horizontal";
+      if (verbose) std::cout << "Horizontal";
       return true;
     }
   }
@@ -98,7 +99,7 @@ bool TicTacToeState::SomebodyWon() const {
       success &= (matrix.at(row, col) == matrix.at(0, col));
     }
     if (success) {
-      std::cout << "Vertical";
+      if (verbose) std::cout << "Vertical";
       return true;
     }
   }
@@ -112,7 +113,7 @@ bool TicTacToeState::SomebodyWon() const {
     success &= (matrix.at(i, i) == matrix.at(0, 0));
   }
   if (success) {
-    std::cout << "Left diagonal";
+    if (verbose) std::cout << "Left diagonal";
     return true;
   }
   // Right diagonal.
@@ -125,7 +126,7 @@ bool TicTacToeState::SomebodyWon() const {
     success &= (matrix.at(num_rows_ - 1 - i, i) == matrix.at(0, num_rows_ - 1));
   }
   if (success) {
-    std::cout << "Right diagonal";
+    if (verbose) std::cout << "Right diagonal";
     return true;
   }
   return false;

@@ -21,7 +21,7 @@ class TicTacToeState : public State {
   explicit TicTacToeState(int dimension)
       : State(dimension), num_rows_(sqrt(dimension_)) {}
 
-  bool Init();
+  bool Init(bool verbose);
 
   bool Valid(int action) const;
 
@@ -37,7 +37,7 @@ class TicTacToeState : public State {
 
  protected:
   // Returns true if somebody has won the game.
-  bool SomebodyWon() const;
+  bool SomebodyWon(bool verbose) const;
 
  private:
   // The data for the tictactoe table. Each char represents a position of the
@@ -47,6 +47,8 @@ class TicTacToeState : public State {
 
   // Number of rows of the table.
   int num_rows_;
+
+  bool verbose_;
 };
 
 }  // namespace ttt

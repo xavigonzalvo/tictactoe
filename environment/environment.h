@@ -16,7 +16,7 @@ class Environment {
  public:
   virtual ~Environment() {}
 
-  virtual bool Start() = 0;
+  virtual bool Start(bool verbose) = 0;
   virtual bool Run(int action) = 0;
 
   // Returns true if it's the end of an episode.

@@ -18,7 +18,7 @@ class TicTacToeEnvironment : public Environment {
         state_(kTableDimension) {}
   ~TicTacToeEnvironment() {}
 
-  bool Start();
+  bool Start(bool verbose);
 
   bool Run(int action);
 

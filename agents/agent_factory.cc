@@ -19,7 +19,7 @@ BaseAgent *AgentFactory(const std::string &name,
   } else if (name == "QLearningAgent") {
     return new QLearningAgent(config, actions, state_handler);
   }
-  std::cerr << "Agent \"" << name << "\" doesn't exist";
+  std::cerr << "Agent \"" << name << "\" doesn't exist" << std::endl;
   return NULL;
 }
 

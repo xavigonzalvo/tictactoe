@@ -2,9 +2,9 @@
 
 namespace ttt {
 
-bool TicTacToeEnvironment::Start() {
+bool TicTacToeEnvironment::Start(bool verbose) {
   end_of_episode_ = false;
-  if (!state_.Init()) {
+  if (!state_.Init(verbose)) {
     return false;
   }
   state_handler_->Clear();

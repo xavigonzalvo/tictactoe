@@ -1,11 +1,15 @@
 // Main tool to train an agent to play tic-tac-toe using reinforcement
 // learning. Use config.proto to set the options.
 
+#include <fcntl.h>
 #include <fstream>
 #include <memory>
 #include <string>
 
 #include <gflags/gflags.h>
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
+
 #include "agents/agent_factory.h"
 #include "agents/base_agent.h"
 #include "environment/state_handler.h"
@@ -23,6 +27,8 @@ DEFINE_string(load_learner_agent_model_path, "",
               "Path to load the model of the learner agent");
 DEFINE_string(load_opponent_agent_model_path, "",
               "Path to load the model of the opponent agent");
+DEFINE_bool(verbose, false,
+            "If true, intermediate rewards are printed");
 
 namespace ttt {
 namespace {
@@ -59,8 +65,15 @@ struct SimpleStats {
 
 bool Run() {
   Config config;
-  std::fstream input(FLAGS_config_path.c_str(), std::ios::in);
-  if (!config.ParseFromIstream(&input)) {
+  int fp = open(FLAGS_config_path.c_str(), O_RDONLY);
+  if (fp < 0) {
+    std::cerr << "Error opening the config file: " << FLAGS_config_path
+              << std::endl;
+    return false;
+  }
+  google::protobuf::io::FileInputStream fileInput(fp);
+  fileInput.SetCloseOnDelete(true);
+  if (!google::protobuf::TextFormat::Parse(&fileInput, &config)) {
     std::cerr << "Failed to parse config" << std::endl;
     return false;
   }
@@ -94,13 +107,13 @@ bool Run() {
   // For each epoch, run an episode until it's finished.
   SimpleStats stats;
   for (int epoch = 0; epoch < FLAGS_epochs; ++epoch) {
-    if (!environment.Start()) {
+    if (!environment.Start(FLAGS_verbose)) {
       std::cerr << "Failed to start environment";
       return false;
     }
     // TODO(xavigonzalvo): randomize the first player?
     learner_agent->SetAction(environment.state());
-    std::cout << "Epoch " << epoch;
+    if (FLAGS_verbose) std::cout << "Epoch " << epoch << std::endl;
     while (!environment.end_of_episode()) {
       if (!environment.Run(learner_agent->action())) {
         std::cerr << "Failed to run environment on epoch " << epoch;
@@ -111,10 +124,12 @@ bool Run() {
       }
       if (!learner_agent->Update(environment.reward(),
                                  environment.end_of_episode())) {
-        std::cerr << "Failed to update learner";
+        std::cerr << "Failed to update learner" << std::endl;
         return false;
       }
-      std::cout << "  Reward = " << environment.reward();
+      if (FLAGS_verbose) {
+        std::cout << "  Reward = " << environment.reward() << std::endl;
+      }
     }
     if (opponent_agent->human()) {
       std::cout << "Final table: " << environment.state()->DebugString()
@@ -142,5 +157,6 @@ bool Run() {
 }  // namespace ttt
 
 int main(int argc, char **argv) {
+  gflags::ParseCommandLineFlags(&argc, &argv, true);
   return ttt::Run() ? 0 : 1;
 }

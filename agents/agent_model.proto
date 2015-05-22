@@ -1,0 +1,17 @@
+// Definition of the Q table of a reinforcement learning agent.
+
+syntax = "proto2";
+
+option cc_api_version = 2;
+option py_api_version = 2;
+
+package ttt;
+
+message AgentModel {
+  message State {
+    optional string key = 1;
+    repeated float action_scores = 2 [packed = true];
+  }
+
+  repeated State states = 1;
+}

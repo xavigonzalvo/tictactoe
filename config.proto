@@ -1,0 +1,32 @@
+// Reinforcement learning option. You can define two agents, the learning one
+// and the opponent. Learning only happens in the "learner" and the environment
+// uses the opponent.
+
+syntax = "proto2";
+
+option cc_api_version = 2;
+option py_api_version = 2;
+
+package ttt;
+
+message Config {
+  // Learning rate.
+  optional float alpha = 1;
+
+  // Discount rate.
+  optional float gamma = 2;
+
+  // Exploration constant.
+  optional float epsilon = 3;
+
+  // Type of agent definition.
+  message Agents {
+    // Agent where the learning is happening.
+    optional string learner = 1;
+
+    // Static opponent just executing actions in the environment. Use a human
+    // agent here.
+    optional string opponent = 2;
+  }
+  optional Agents agents = 4;
+}

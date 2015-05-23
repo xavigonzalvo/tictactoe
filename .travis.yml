@@ -13,6 +13,7 @@ before_install:
   - ./configure && sudo make install
   - cd ..
   - wget https://github.com/gflags/gflags/archive/master.zip
+  - unzip master.zip
   - cd gflags-master
   - mkdir build && cd build
   - cmake ..

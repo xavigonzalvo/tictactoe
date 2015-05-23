@@ -1,7 +1,6 @@
 language: cpp
 
 compiler:
-  - clang
   - gcc
 
 notifications:
@@ -13,12 +12,7 @@ before_install:
   - cd protobuf-2.5.0
   - ./configure && sudo make install
   - cd ..
-  - git clone git@github.com:gflags/gflags.git
-  - cd gflags
-  - mkdir build && cd build
-  - cmake ..
-  - make install
-  - cd ../..
+  - sudo apt-get install gflags
 
 script:
   - mkdir build && cd build

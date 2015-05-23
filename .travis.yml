@@ -12,7 +12,12 @@ before_install:
   - cd protobuf-2.5.0
   - ./configure && sudo make install
   - cd ..
-  - sudo apt-get install gflags
+  - wget https://github.com/gflags/gflags/archive/master.zip
+  - cd gflags-master
+  - mkdir build && cd build
+  - cmake ..
+  - make install
+  - cd ../..
 
 script:
   - mkdir build && cd build

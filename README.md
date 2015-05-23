@@ -1,6 +1,8 @@
 Tic-Tac-Toe learning with Reinforcement learning (RL)
 ======================================================
 
+[![Build Status](https://travis-ci.org/xavigonzalvo/tictactoe.svg)](https://travis-ci.org/xavigonzalvo/tictactoe)
+
 This is a simple RL library to train a Tic-Tac-Toe game using
 on-policy and off-policy algorithms. The RL learning code is fairly
 generic and it includes two main directories following the definition

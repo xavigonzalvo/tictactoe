@@ -1,9 +1,5 @@
-#Tic-Tac-Toe learning with Reinforcement learning (RL)
+Tic-Tac-Toe learning with Reinforcement learning (RL)
 ======================================================
-
-Install protocol buffers from
-Install gflags from 
-
 
 This is a simple RL library to train a Tic-Tac-Toe game using
 on-policy and off-policy algorithms. The RL learning code is fairly
@@ -22,22 +18,36 @@ and receving a reward:
 
 Supported learning agents are Sarsa and Q-learning.
 
+Installation
+------------
+
+- Install protocol buffers from [Google developers' page](https://developers.google.com/protocol-buffers/)
+
+- Install gflags from [http://gflags.github.io/gflags/#download](http://gflags.github.io/gflags/#download)
+
+- Compile from source:
+
+        $ mkdir build && cd build
+        $ cmake ..
+        $ make
+
+
 Configuration
 -------------
 
-You can use the configutation defined in config.proto. For example, to
+You can use the configutation defined in ```config.proto```. For example, to
 define two Sarsa agents that interact with themselves, use the
 following:
 
-  alpha: 0.8
-  gamma: 0.9
-  epsilon: 0.1
-  agents {
-    learner: "SarsaAgent"
-    opponent: "SarsaAgent"
-  }
+    alpha: 0.8
+    gamma: 0.9
+    epsilon: 0.1
+    agents {
+      learner: "SarsaAgent"
+      opponent: "SarsaAgent"
+    }
 
-You will find more configurations in the config/ folder.
+You will find more configurations in the ```config/``` folder.
 
 The rest of the variables are the typical important factors used in RL
 (eg. learning rate, discount factor). Please refer to config.proto for
@@ -46,24 +56,23 @@ more information.
 Learning
 --------
 
-Simply compile the main tool:
+Use it like this:
 
-  mkdir build
-  cd build
-  cmake ..
-  make
+    ./learner --config_path ../config/sarsa_vs_sarsa.pb --epochs 1000000
 
-and use it like this:
+This will train a Sarsa agent while interacting with itself. In order
+to save the final models, add the following options:
 
-  ./learner --config_path ../config/sarsa_vs_sarsa.pb --epochs 1000000
+    --save_agent_model_path /tmp/sarsa.model
+
 
 Human agent
 -----------
 
 You can interact directly with the system specifying a human agent:
 
-  ./learner --config_path ../config/human_vs_sarsa.pb \
-  --epochs 10 --load_learner_agent_model_path ../models/random_vs_sarsa_epochs2000000.model
+    ./learner --config_path ../config/human_vs_sarsa.pb \
+      --epochs 10 --load_learner_agent_model_path ../models/random_vs_sarsa_epochs2000000.model
 
 
 TODO

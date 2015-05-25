@@ -22,5 +22,5 @@ fi
 wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
 tar -xvzf protobuf-2.5.0.tar.gz
 cd protobuf-2.5.0
-./configure && sudo make install
+./configure --prefix=/usr && sudo make install
 cd ..

@@ -14,3 +14,12 @@ else
     sudo apt-get update -qq
     sudo apt-get install cmake
 fi
+
+sudo apt-get update >/dev/null
+sudo apt-get -q install check libprotobuf-c0-dev protobuf-c-compiler
+
+#wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
+#tar -xvzf protobuf-2.5.0.tar.gz
+#cd protobuf-2.5.0
+#./configure && sudo make install
+#cd ..

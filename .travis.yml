@@ -8,12 +8,13 @@ notifications:
 
 before_install:
   - ./scripts/update_cmake.sh
-  - git clone git@github.com:gflags/gflags.git
-  - cd gflags
-  - git reset --hard d4e971c10b1557292b5371807a23921d15e7fece
+  - wget https://github.com/gflags/gflags/archive/16a1687.zip
+  - unzip 16a1687.zip
+  - cd 16a1687
   - mkdir build && cd build
   - cmake ..
   - sudo make install
+  - cd ../..
 
 script:
   - mkdir build && cd build

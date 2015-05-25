@@ -7,7 +7,11 @@ notifications:
   email: false
 
 before_install:
-  - ./scripts/update_cmake.sh
+  - wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
+  - tar -xvzf protobuf-2.5.0.tar.gz
+  - cd protobuf-2.5.0
+  - ./configure --prefix=/usr && sudo make install
+  - cd ..
   - wget https://github.com/gflags/gflags/archive/16a1687.zip
   - unzip 16a1687.zip
   - cd gflags-16a168763e2cb41f8bf9f40505fcba494e316a35

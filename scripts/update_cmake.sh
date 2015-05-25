@@ -13,6 +13,7 @@ else
     #sudo add-apt-repository --yes ppa:kalakris/cmake
     #sudo apt-get update -qq
     #sudo apt-get install cmake
+    echo
 fi
 
 sudo apt-get update >/dev/null

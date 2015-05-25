@@ -10,7 +10,7 @@ before_install:
   - ./scripts/update_cmake.sh
   - wget https://github.com/gflags/gflags/archive/16a1687.zip
   - unzip 16a1687.zip
-  - cd 16a1687
+  - cd gflags-16a168763e2cb41f8bf9f40505fcba494e316a35
   - mkdir build && cd build
   - cmake ..
   - sudo make install
